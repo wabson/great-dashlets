@@ -20,7 +20,6 @@ function main()
    widgets.push({
       id: "HelloWorld",
       name: "MyCompany.dashlet.HelloWorld",
-      assignTo : "dashlet",                   // If we need to reference the generated JS object
       options: {
          componentId: instance.object.id
       }
