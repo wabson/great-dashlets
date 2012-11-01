@@ -15,23 +15,6 @@ function main()
    
    // Dashlet widgets
    var widgets = [];
-   
-   // Main component
-   widgets.push({
-      id: "HelloWorld",
-      name: "MyCompany.dashlet.HelloWorld",
-      options: {
-         componentId: instance.object.id
-      }
-   });
-
-   // Resizer
-   widgets.push({
-      id : "DashletResizer",
-      name : "Alfresco.widget.DashletResizer",
-      initArgs : ["\"" + args.htmlid + "\"","\"" + instance.object.id + "\""],
-      useMessages: false
-   });
 
    // Title bar actions
    var actions = [];
