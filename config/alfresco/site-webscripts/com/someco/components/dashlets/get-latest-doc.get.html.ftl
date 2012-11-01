@@ -1,13 +1,13 @@
 <@markup id="css" >
    <#-- CSS Dependencies -->
-   <@link rel="stylesheet" type="text/css" href="${page.url.context}/res/extension/components/dashlets/get-latest-doc.css" group="dashlets" /> 
+   <@link rel="stylesheet" type="text/css" href="${page.url.context}/res/someco/components/dashlets/get-latest-doc.css" group="dashlets" /> 
    <#-- Global Folder Select --> 
    <@link rel="stylesheet" type="text/css" href="${page.url.context}/res/modules/documentlibrary/global-folder.css" group="dashlets" />
 </@>
 
 <@markup id="js">
    <#-- JavaScript Dependencies -->
-   <@script type="text/javascript" src="${page.url.context}/res/extension/components/dashlets/get-latest-doc.js" group="dashlets"></@script>
+   <@script type="text/javascript" src="${page.url.context}/res/someco/components/dashlets/get-latest-doc.js" group="dashlets"></@script>
    <#-- Simple Dialog --> 
    <@script type="text/javascript" src="${page.url.context}/res/modules/simple-dialog.js" group="dashlets"></@script>
    <#-- Global Folder Select --> 
