@@ -15,6 +15,14 @@ function main()
    
    // Dashlet widgets
    var widgets = [];
+   
+   // Resizer
+   widgets.push({
+      id : "DashletResizer",
+      name : "Alfresco.widget.DashletResizer",
+      initArgs : ["\"" + args.htmlid + "\"","\"" + instance.object.id + "\""],
+      useMessages: false
+   });
 
    // Title bar actions
    var actions = [];
