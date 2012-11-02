@@ -85,7 +85,8 @@ if (typeof MyCompany.dashlet == "undefined" || !MyCompany.dashlet)
        */
       onButtonClick: function HelloWorld_onButtonClick(e)
       {
-         window.alert("It works!");
+         Dom.get(this.id + "-greeting").innerHTML = this.msg("label.expert");
+         Dom.addClass(this.id + "-greeting", "expert-greeting");
       }
       
    });

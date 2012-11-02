@@ -19,7 +19,7 @@
            <div class="title">${msg("header")}</div>
            <div class="body scrollableList"<#if args.height??> style="height: ${args.height}px;"</#if>>
              <div class="detail-list-item first-item">
-                <span><#if greeting=="hello">${msg("label.hello", user.firstName)}<#else>${msg("label.goodbye", user.firstName)}</#if></span>
+                <span id="${el}-greeting"><#if greeting=="hello">${msg("label.hello", user.firstName)}<#else>${msg("label.goodbye", user.firstName)}</#if></span>
              </div>
              <div class="detail-list-item last-item">
                 <button id="${el}-testButton">${msg('label.button')}</button>
