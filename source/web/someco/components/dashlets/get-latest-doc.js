@@ -63,7 +63,7 @@ if (typeof politie == "undefined" || !politie)
        */
       onConfigGetLatestDocClick : function getLatestDoc_onConfigGetLatestDocClick(e)
       {
-         var actionUrl = Alfresco.constants.URL_SERVICECONTEXT + "modules/politie/get-latest-doc/config/" + encodeURIComponent(this.options.componentId);
+         var actionUrl = Alfresco.constants.URL_SERVICECONTEXT + "modules/dashlet/config/" + encodeURIComponent(this.options.componentId);
 
          if (!this.configDialog)
          {
@@ -76,15 +76,12 @@ if (typeof politie == "undefined" || !politie)
                {
                   fn : function getLatestDoc_onConfig_callback(response)
                   {
-                     var obj = response.json;
-
-                     // Save values for new config dialog
-                     // openings
-                     this.options.title = (obj && obj.title) ? obj.title : this.options.title;
-                     this.options.filterPath = (obj && obj.filterPath) ? obj.filterPath
+                     this.options.title = Dom.get(this.configDialog.id + "-title").value;
+                     this.options.filterPath = (Dom.get(this.configDialog.id + "-filterPath").value) ? Dom.get(this.configDialog.id + "-filterPath").value
                            : this.options.filterPath;
-
-                     var scriptURL = Alfresco.constants.PROXY_URI + "/politie/get-latest-doc?filterPathView=" + obj.filterPathView;
+                     
+                     var filterPathView = this.options.filterPath.split("|")[1], 
+                        scriptURL = Alfresco.constants.PROXY_URI + "/politie/get-latest-doc?filterPathView=" + filterPathView;
 
                      YAHOO.util.Connect.asyncRequest("GET", scriptURL,
                      {
@@ -114,9 +111,9 @@ if (typeof politie == "undefined" || !politie)
                      }
 
                      // Update dashlet config with new values
-                     Dom.get(this.configDialog.id + "-title").value = obj ? obj.title : "";
-                     Dom.get(this.configDialog.id + "-filterPath").value = obj ? obj.filterPath : "";
-                     Dom.get(this.configDialog.id + "-filterPathView").innerHTML = obj ? obj.filterPathView : "";
+                     Dom.get(this.configDialog.id + "-title").value = this.options.title;
+                     Dom.get(this.configDialog.id + "-filterPath").value = this.options.filterPath;
+                     Dom.get(this.configDialog.id + "-filterPathView").innerHTML = filterPathView;
                   },
                   scope : this
                },

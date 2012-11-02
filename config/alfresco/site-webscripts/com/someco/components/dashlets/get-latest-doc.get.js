@@ -38,7 +38,7 @@ function main()
 	{
 		filterPath = "";
 	}
-	var filterPathView = args.filterPathView;
+	var filterPathView = filterPath != "" ? filterPath.split("|")[1] : "";
 	
 	// Create XML object to pull values from
 	// configuration file
