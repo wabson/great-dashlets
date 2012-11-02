@@ -39,6 +39,11 @@ if (typeof MyCompany.dashlet == "undefined" || !MyCompany.dashlet)
    var $html = Alfresco.util.encodeHTML,
       $combine = Alfresco.util.combinePaths;
 
+   /**
+    * Preferences
+    */
+   var PREFERENCES_SITES = "com.someco.share.helloWorld",
+       PREFERENCES_HELLO_WORLD_FILTER = PREFERENCES_SITES + ".dashlet.filter";
 
    /**
     * Dashboard HelloWorld constructor.
@@ -49,7 +54,12 @@ if (typeof MyCompany.dashlet == "undefined" || !MyCompany.dashlet)
     */
    MyCompany.dashlet.HelloWorld = function HelloWorld_constructor(htmlId)
    {
-      return MyCompany.dashlet.HelloWorld.superclass.constructor.call(this, "MyCompany.dashlet.HelloWorld", htmlId);
+      MyCompany.dashlet.HelloWorld.superclass.constructor.call(this, "MyCompany.dashlet.HelloWorld", htmlId);
+
+      // Services
+      this.services.preferences = new Alfresco.service.Preferences();
+      
+      return this;
    };
 
    /**
@@ -58,6 +68,14 @@ if (typeof MyCompany.dashlet == "undefined" || !MyCompany.dashlet)
    YAHOO.extend(MyCompany.dashlet.HelloWorld, Alfresco.component.Base,
    {
       /**
+       * Selected filter value
+       * 
+       * @property filter
+       * @type String
+       */
+      filter: null,
+      
+      /**
        * Object container for initialization options
        *
        * @property options
@@ -65,6 +83,17 @@ if (typeof MyCompany.dashlet == "undefined" || !MyCompany.dashlet)
        */
       options:
       {
+         /**
+          * List of valid filters
+          *
+          * @property validFilters
+          * @type object
+          */
+         validFilters:
+         {
+            "choice1": true,
+            "choice2": true
+         }
       },
 
       /**
@@ -87,6 +116,27 @@ if (typeof MyCompany.dashlet == "undefined" || !MyCompany.dashlet)
 
          // Listen on clicks for the create site link
          Event.addListener(this.id + "-createSomething", "click", this.onCreateSomething, this, true);
+         
+         // Load preferences
+         this.initPreferences();
+      },
+      
+      /**
+       * Init cached state from User Preferences
+       *
+       * @method initPreferences
+       */
+      initPreferences: function MySites_initPreferences()
+      {
+         var prefs = this.services.preferences.get();
+         
+         // Retrieve the filter value for the UI
+         var filter = Alfresco.util.findValueByDotNotation(prefs, PREFERENCES_HELLO_WORLD_FILTER, "choice1");
+         this.filter = this.options.validFilters.hasOwnProperty(filter) ? filter : "choice1";
+         
+         // Select the preferred filter in the ui
+         this.widgets.type.set("label", this.msg("filter." + this.filter));
+         this.widgets.type.value = this.filter;
       },
       
       /**
@@ -130,6 +180,22 @@ if (typeof MyCompany.dashlet == "undefined" || !MyCompany.dashlet)
             this.widgets.type.value = menuItem.value;
 
             window.alert("You selected " + menuItem.cfg.getProperty("text"));
+            
+            // Save preferences
+            this.services.preferences.set(PREFERENCES_HELLO_WORLD_FILTER, menuItem.value,
+            {
+               successCallback:
+               {
+                  fn: function()
+                  {
+                     // Update local cached copy of current filter
+                     this.filter = menuItem.value;
+
+                     // Trigger any additional behaviour here, e.g. re-loading...
+                  },
+                  scope: this
+               }
+            });
          }
       }
       
