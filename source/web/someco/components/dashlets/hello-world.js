@@ -160,7 +160,9 @@ if (typeof MyCompany.dashlet == "undefined" || !MyCompany.dashlet)
        */
       onCreateSomething: function HelloWorld_onCreateSomething(p_sType)
       {
-         window.alert("Create something");
+         Alfresco.util.PopupManager.displayPrompt({
+            text: this.msg("msg.prompt")
+         });
       },
       
       /**
@@ -179,7 +181,9 @@ if (typeof MyCompany.dashlet == "undefined" || !MyCompany.dashlet)
             this.widgets.type.set("label", menuItem.cfg.getProperty("text"));
             this.widgets.type.value = menuItem.value;
 
-            window.alert("You selected " + menuItem.cfg.getProperty("text"));
+            Alfresco.util.PopupManager.displayMessage({
+               text: this.msg("msg.selected", menuItem.cfg.getProperty("text"))
+            });
             
             // Save preferences
             this.services.preferences.set(PREFERENCES_HELLO_WORLD_FILTER, menuItem.value,
