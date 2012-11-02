@@ -74,18 +74,63 @@ if (typeof MyCompany.dashlet == "undefined" || !MyCompany.dashlet)
        */
       onReady: function HelloWorld_onReady()
       {
-         // Code goes here
+         // Push buttton
          this.widgets.testButton = Alfresco.util.createYUIButton(this, "testButton", this.onButtonClick);
+         
+         // Dropdown select
+         this.widgets.type = Alfresco.util.createYUIButton(this, "type", this.onFilterChange,
+         {
+            type: "menu",
+            menu: "selectMenu",
+            lazyloadmenu: false
+         });
+
+         // Listen on clicks for the create site link
+         Event.addListener(this.id + "-createSomething", "click", this.onCreateSomething, this, true);
       },
       
       /**
        * Button click event handler
        * 
        * @method onButtonClick
+       * @param p_sType {string} The event
+       * @param p_aArgs {array}
        */
-      onButtonClick: function HelloWorld_onButtonClick(e)
+      onButtonClick: function HelloWorld_onButtonClick(p_sType)
       {
          window.alert("It works!");
+      },
+      
+      /**
+       * Button click event handler
+       * 
+       * @method onCreateSomething
+       * @param p_sType {string} The event
+       * @param p_aArgs {array}
+       */
+      onCreateSomething: function HelloWorld_onCreateSomething(p_sType)
+      {
+         window.alert("Create something");
+      },
+      
+      /**
+       * Drop-down list click event handler
+       * 
+       * @method onFilterChange
+       * @param p_sType {string} The event
+       * @param p_aArgs {array}
+       */
+      onFilterChange: function HelloWorld_onFilterChange(p_sType, p_aArgs)
+      {
+         var menuItem = p_aArgs[1];
+         if (menuItem)
+         {
+            // Need to set the button label and value manually
+            this.widgets.type.set("label", menuItem.cfg.getProperty("text"));
+            this.widgets.type.value = menuItem.value;
+
+            window.alert("You selected " + menuItem.cfg.getProperty("text"));
+         }
       }
       
    });
