@@ -75,6 +75,17 @@ if (typeof MyCompany.dashlet == "undefined" || !MyCompany.dashlet)
       onReady: function HelloWorld_onReady()
       {
          // Code goes here
+         this.widgets.testButton = Alfresco.util.createYUIButton(this, "testButton", this.onButtonClick);
+      },
+      
+      /**
+       * Button click event handler
+       * 
+       * @method onButtonClick
+       */
+      onButtonClick: function HelloWorld_onButtonClick(e)
+      {
+         window.alert("It works!");
       }
       
    });
