@@ -82,33 +82,25 @@ if (typeof politie == "undefined" || !politie)
                      
                      var filterPathView = this.options.filterPath.split("|")[1], 
                         scriptURL = Alfresco.constants.PROXY_URI + "/politie/get-latest-doc?filterPathView=" + filterPathView;
+                     
+                     // Re-load data from the repository
+                     Alfresco.util.Ajax.jsonGet({
+                        url: scriptURL,
+                        successCallback: {
+                           fn: function handleInfo(obje)
+                           {
+                              // Update dashlet body with new values
+                              var dat = obje.json,
+                                 fileExt = dat.name.lastIndexOf(".");
+                              fileExt = dat.name.substring(fileExt + 1).toLowerCase();
+                              Dom.get("getlatestdoc_item_afb").innerHTML = '<a href="' + Alfresco.constants.URL_CONTEXT + '/page/document-details?nodeRef=' + dat.nodeRef + '"><img src="' + Alfresco.constants.URL_CONTEXT + '/components/images/filetypes/' + fileExt + '-file-48.png" onerror="this.src=\'' + Alfresco.constants.URL_CONTEXT + '/res/components/images/filetypes/generic-file-48.png\'" title="' + dat.name + '" class="node-thumbnail" width="48" /> ';
+                              Dom.get("getlatestdoc_item_info").innerHTML = '<a href="' + Alfresco.constants.URL_CONTEXT + '/page/document-details?nodeRef=' + dat.nodeRef + '">' + dat.name + '</a><br /> ' + dat.created + '<br />';
+                           },
+                           scope: this
+                        }
+                     });
 
-                     YAHOO.util.Connect.asyncRequest("GET", scriptURL,
-                     {
-                        success : handleInfo,
-                        failure : handleErrorYahoo,
-                     }, null);
-
-                     // Update dashlet body with new values
-                     function handleInfo(obje)
-                     {
-                        var dat = eval("(" + obje.responseText + ")");
-
-                        var fileExt = String(dat.name).lastIndexOf(".");
-                        fileExt = String(dat.name).substring(fileExt + 1).toLowerCase();
-                        Dom.get("getlatestdoc_item_afb").innerHTML = '<a href="' + Alfresco.constants.URL_CONTEXT + '/page/document-details?nodeRef=' + dat.nodeRef + '"><img src="' + Alfresco.constants.URL_CONTEXT + '/components/images/filetypes/' + fileExt + '-file-48.png" onerror="this.src=\'' + Alfresco.constants.URL_CONTEXT + '/res/components/images/filetypes/generic-file-48.png\'" title="' + dat.name + '" class="node-thumbnail" width="48" /> ';
-                        Dom.get("getlatestdoc_item_info").innerHTML = '<a href="' + Alfresco.constants.URL_CONTEXT + '/page/document-details?nodeRef=' + dat.nodeRef + '">' + dat.name + '</a><br /> ' + dat.created + '<br />';
-                     }
-
-                     Dom.get("getlatestdoc_title").innerHTML = obj ? obj.title : "";
-
-                     // function
-                     // handleErrorYahoo(response){alert("failed..."
-                     // + response.responseText);}
-                     function handleErrorYahoo(response)
-                     {
-                        alert("Failed... No file found at this location");
-                     }
+                     Dom.get("getlatestdoc_title").innerHTML = this.options.title || "";
 
                      // Update dashlet config with new values
                      Dom.get(this.configDialog.id + "-title").value = this.options.title;
