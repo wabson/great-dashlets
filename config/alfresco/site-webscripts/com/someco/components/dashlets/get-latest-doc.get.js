@@ -1,16 +1,22 @@
 function main()
 {
-
 	// Call the repository to see if the user is site manager or not
 	var userIsSiteManager = false;
+	
+   // Site ID and component ID
+   var siteId = page.url.templateArgs.site,
+      objectId = instance.object.id;
 	
 	// Check to see if user is on user dashboard or site dashboard... 
 	// if on site dashboard, check for permission, 
 	// if on user dashboard, grant permission
 	
-	if(page.url.templateArgs.site == null || page.url.templateArgs.site == undefined){
+	if (page.url.templateArgs.site == null || page.url.templateArgs.site == undefined)
+	{
 		userIsSiteManager = true;
-	}else{
+	}
+	else
+	{
 		json = remote.call("/api/sites/" + page.url.templateArgs.site + "/memberships/" + encodeURIComponent(user.name));
 
 		if (json.status == 200)
@@ -32,7 +38,7 @@ function main()
 	{
 		filterPath = "";
 	}
-	var filterPathView = args.filterPathView;
+	var filterPathView = filterPath != "" ? filterPath.split("|")[1] : "";
 	
 	// Create XML object to pull values from
 	// configuration file
@@ -67,16 +73,64 @@ function main()
 		obj.created = "";
 		model.result = obj;
 	}
-  
-    // Set values on the model for use in templates
+	  
+   // Set values on the model for use in templates
 
-	model.title = title;
-	model.filterPath = filterPath;
-	model.filterPathView = filterPathView;
+   model.title = title;
+   model.filterPath = filterPath;
+   model.filterPathView = filterPathView;
+
+   // Component definition
+   var dashlet = {
+      id: "GetLatestDoc",
+      name: "politie.dashlet.GetLatestDoc",
+      assignTo : "dashlet",                   // Need to reference the generated JS object
+      options: {
+         componentId: objectId,
+         siteId: siteId,
+         title: title,
+         filterPath: filterPath,
+         filterPathView: filterPathView
+      }
+   };
+
+   // Dashlet title bar component actions and resizer
+   var actions = [];
+   if (userIsSiteManager)
+   {
+      actions.push(
+      {
+         cssClass: "edit",
+         eventOnClick: { _alfValue : "editDashletEvent", _alfType: "REFERENCE"},
+         tooltip: msg.get("dashlet.edit.tooltip")
+      });
+   }
+   actions.push({
+      cssClass: "help",
+      bubbleOnClick:
+      {
+         message: msg.get("dashlet.help")
+      },
+      tooltip: msg.get("dashlet.help.tooltip")
+   });
+
+   var dashletResizer = {
+      id : "DashletResizer",
+      name : "Alfresco.widget.DashletResizer",
+      initArgs : ["\"" + args.htmlid + "\"","\"" + objectId + "\""],
+      useMessages: false
+   };
+
+   var dashletTitleBarActions = {
+      id : "DashletTitleBarActions",
+      name : "Alfresco.widget.DashletTitleBarActions",
+      useMessages : false,
+      options : {
+         actions: actions
+      }
+   };
+
+   model.widgets = [dashlet, dashletResizer, dashletTitleBarActions];
 }
 
 main();
-
-
-
-
