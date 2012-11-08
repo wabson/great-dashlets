@@ -1,19 +1,18 @@
 Great Dashlets Sample Code
 ==========================
 
-This project was developed for the [http://devcon.alfresco.com](Alfresco Developer Conferences) in November 
+This project was developed for the [Alfresco Developer Conferences](http://devcon.alfresco.com/) in November 
 2012 to provide a concrete example of adding incremental and practical 
 features to an Alfresco Share dashlet.
 
-Starting with an updated version of the [http://code.google.com/p/share-extras/wiki/SampleProject](Hello World example) from Share Extras,
+Starting with an updated version of the [Hello World example](http://code.google.com/p/share-extras/wiki/SampleProject) from Share Extras,
 the project shows how more dynamic controls and user features can be added.
 
-The accompanying slides can be found on the [https://devcon.alfresco.com/berlin/sessions/develop-great-dashlets](Berlin session) page on the DevCon site, and are broken down 
+The accompanying slides can be found on the [Berlin session](https://devcon.alfresco.com/berlin/sessions/develop-great-dashlets) page on the DevCon site, and are broken down 
 into eight main parts, plus two supplemental parts which demonstrate more 
 advanced features, specifically how to load data from the repository and how 
 to add a configuration dialogue to the dashlet. The two supplemental parts are
-demonstrated using a second dashlet provided by Jeff Potts in two [http://ecmarchitect.com/archives/2012/05/04/1592
-](blog) [http://ecmarchitect.com/archives/2012/05/15/1599](posts) 
+demonstrated using a second dashlet provided by Jeff Potts in two [blog](http://ecmarchitect.com/archives/2012/05/04/1592) [posts](http://ecmarchitect.com/archives/2012/05/15/1599) 
 from May 2012.
 
 The complete list of items covered is as follows
