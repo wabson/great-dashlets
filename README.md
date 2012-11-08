@@ -30,3 +30,12 @@ The code in each of these stages can be found in the branches `helloworld1`
 through `helloworld8` in this project. Check out the code via Git or download
 the source as a ZIP and extract it locally.
 
+You can build and deploy the code using the `hotcopy-tomcat-jar` or 
+`hotcopy-tomcat-zip` Ant tasks. You'll need to sepcify the location of
+the Tomcat instance where Share is installed, e.g.
+
+    ant hotcopy-tomcat-jar -Dtomcat.home=/opt/Alfresco/tomcat
+
+If you use the supplemental examples provided by the Get Latest Document
+Dashlet, you will also need to deploy the JAR file to the repository Tomcat,
+if this is running separately to Share.
