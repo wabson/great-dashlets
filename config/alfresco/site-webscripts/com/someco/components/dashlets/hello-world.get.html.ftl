@@ -1,11 +1,13 @@
 <@markup id="css" >
    <#-- CSS Dependencies -->
-   <@link rel="stylesheet" type="text/css" href="${page.url.context}/res/someco/components/dashlets/hello-world.css" group="dashlets" />
+   <@link rel="stylesheet" type="text/css" group="dashlets"
+      href="${page.url.context}/res/someco/components/dashlets/hello-world.css" />
 </@>
 
 <@markup id="js">
    <#-- JavaScript Dependencies -->
-   <@script type="text/javascript" src="${page.url.context}/res/someco/components/dashlets/hello-world.js" group="dashlets"></@script>
+   <@script type="text/javascript" group="dashlets"
+      src="${page.url.context}/res/someco/components/dashlets/hello-world.js"></@script>
 </@>
 
 <@markup id="widgets">
